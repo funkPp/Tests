@@ -31,6 +31,7 @@ def result(request, pk):
             'tests': Tests.objects.all(),
             'pk' : pk,
             'form': form,
+
             'test': res.test
         }
     return render(request, 'blog/result.html', context)
