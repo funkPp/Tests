@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+
+
+{% block content %}
+    {% for message in messages %}
+        {{ message }} <br>
+    {% endfor %}
+<div>
+     <li class="list-group-item list-group-item-light">
+        <h2>Выберите тест</h2>
+     </li>
+</div>
+{% endblock content %}
+
+{% block content2 %}
+         <ul class="list-group" method="post">
+             {% for el in tests %}
+                    <li class="list-group-item list-group-item-light">
+                        <a href="{% url 'tester' el.id %}">{{ el }}</a>
+                    </li>
+             {% endfor %}
+         </ul>
+{% endblock content2 %}
+
+

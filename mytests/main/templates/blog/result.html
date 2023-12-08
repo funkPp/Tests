@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+ <form action="{% url 'result' pk %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+<!--    <div>-->
+         <li class="list-group-item list-group-item-light">
+            <h3>Резельтат теста: {{ test }}</h3>
+         </li>
+        <li class="list-group-item list-group-item-light">
+            {{ form.as_div }}
+        </li>
+        <li class="list-group-item list-group-item-light">
+            <button type="submit" class="btn btn-primary"  value="next">Сохранить комментарий</button>
+        </li>
+<!--    </div>-->
+ </form>
+{% endblock content %}
+
+{% block content2 %}
+         <ul class="list-group" method="post" >
+             {% for el in tests %}
+                    <li class="list-group-item list-group-item-light">
+                        <a href="{% url 'tester' el.id %}">{{ el }}</a>
+                    </li>
+             {% endfor %}
+         </ul>
+{% endblock content2 %}

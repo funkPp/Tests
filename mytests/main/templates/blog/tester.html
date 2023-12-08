@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <form action="{% url 'tester' test.id task_next res.pk %}" method="post">
+    {% csrf_token %}
+        <li class="list-group-item list-group-item-light">
+            <h3>{{test}}</h3>
+        </li>
+        <br>
+        <li class="list-group-item list-group-item-light">
+                 <h5>{{ task.desc|linebreaks }}</h5>
+        </li>
+                    {% for a in answers %}
+                        <div>
+                            <li class="list-group-item list-group-item-light" ;>
+                                <input type="radio" style="margin-left: 20px" name="choice_answer" id="{{ a.id }}" value="{{ a.id }}" />
+                                <label>{{ a }}</label><br/>
+                            </li>
+                        </div>
+                    {% endfor %}
+        <br>
+        <li class="list-group-item list-group-item-light">
+            {% if task_next == 0 %}
+                <button type="submit" class="btn btn-primary"  value="next">Завершить тест</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary"  value="next">Следующий вопрос</button>
+            {% endif %}
+        </li>
+    </form>
+
+
+{% endblock content %}
+
+{% block content2 %}
+         <ul class="list-group" method="post">
+             {% for el in tests %}
+<!--                <li class="list-group-item list-group-item-light">-->
+<!--                    <input type="radio" name="choice" id="{{ el.id }}" value="{{ el.id }}" />-->
+<!--                    <label for={{ forloop.counter }}>{{ el }}</label><br/>-->
+<!--                </li>-->
+
+                    <li class="list-group-item list-group-item-light">
+                        <a href="{% url 'tester' el.id %}">{{ el }}</a>
+                    </li>
+             {% endfor %}
+         </ul>
+<!--        <button type="submit" class="btn btn-primary"  value="next">Выбрать тест</button>-->
+{% endblock content2 %}
