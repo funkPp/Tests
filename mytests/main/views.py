@@ -9,12 +9,12 @@ from django.views import generic
 import datetime
 
 
-#@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class ResultListView(generic.ListView):
     model = Result
     template_name = 'main/results.html'
     paginate_by = 10
-#    queryset = Result.objects.filter(user = 1).order_by('date')
+
     def get_queryset(self):
         user = self.request.user
         object_list = self.model.objects.all()
@@ -26,7 +26,8 @@ class ResultListView(generic.ListView):
 def result(request, pk):
 
     if request.method == 'POST':
-        form = ResultForm(request.POST)
+        res = Result.objects.get(pk=pk)
+        form = ResultForm(request.POST, instance=res)
         if form.is_valid():
             form.save()
             messages.success(request, f'Ваши данные сохранены!')
@@ -48,7 +49,6 @@ def result(request, pk):
             'tests': Tests.objects.all(),
             'pk' : pk,
             'form': form,
-
             'test': res.test
         }
     return render(request, 'main/result.html', context)
