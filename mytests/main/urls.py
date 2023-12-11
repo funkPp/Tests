@@ -7,4 +7,5 @@ urlpatterns = [
 	path('tester/<int:id>', views.tester, name='tester'),
 	path('tester', views.tester, name='tester'),
 	path('result/<int:pk>', views.result, name='result'),
+	path('results/', views.ResultListView.as_view(), name='results'),
 ]

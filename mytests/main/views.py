@@ -1,11 +1,28 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Tasks,Tests, Answers, Result
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from .forms import ResultForm
+from django.views import generic
+
 import datetime
 
 
+#@method_decorator(login_required, name='dispatch')
+class ResultListView(generic.ListView):
+    model = Result
+    template_name = 'main/results.html'
+    paginate_by = 10
+#    queryset = Result.objects.filter(user = 1).order_by('date')
+    def get_queryset(self):
+        user = self.request.user
+        object_list = self.model.objects.all()
+        if user:
+            object_list = object_list.filter(user=user)
+        return object_list
+
+@login_required
 def result(request, pk):
 
     if request.method == 'POST':
@@ -34,7 +51,7 @@ def result(request, pk):
 
             'test': res.test
         }
-    return render(request, 'blog/result.html', context)
+    return render(request, 'main/result.html', context)
 
 @login_required
 def tester(request, id = -1, id_task = -1, pk = -1):
@@ -98,7 +115,7 @@ def tester(request, id = -1, id_task = -1, pk = -1):
         'post': request.POST
     }
 
-    return render(request, 'blog/tester.html', context)
+    return render(request, 'main/tester.html', context)
 
 @login_required
 def home(request):
@@ -115,7 +132,7 @@ def home(request):
             'title': 'Тесты',
             'tests': Tests.objects.all(),
         }
-    return render(request, 'blog/home.html', context)
+    return render(request, 'main/home.html', context)
 
 
 def about(request):
@@ -123,4 +140,4 @@ def about(request):
     context = {
         'title': 'обо мне!'
     }
-    return render(request, 'blog/about.html', context)
+    return render(request, 'main/about.html', context)
