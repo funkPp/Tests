@@ -42,8 +42,6 @@ def result(request, pk):
     else:
         res = Result.objects.get(pk=pk)
         form = ResultForm(instance = res)
-#        form.fields['test'].queryset = Tests.objects.filter(id=res.test_id)
-#        form.instance = res
 
         context = {
             'tests': Tests.objects.all(),
