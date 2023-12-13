@@ -20,12 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-70o72x1i&ajy1^0ge$ha=n7f(xdjay%$e!dyo-ayk+1$)$qsi2'
+#SECRET_KEY = 'django-insecure-70o72x1i&ajy1^0ge$ha=n7f(xdjay%$e!dyo-ayk+1$)$qsi2'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tssdsdswax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
-ALLOWED_HOSTS = ['rrkarimov.pythonanywhere.com']
+ALLOWED_HOSTS = ['rrkarimov.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
     'main',
     'users.apps.UsersConfig',
     'crispy_forms',
-    'crispy_bootstrap4'
+#    'crispy_bootstrap4'
 ]
 
 MIDDLEWARE = [
