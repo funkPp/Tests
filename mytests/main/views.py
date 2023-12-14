@@ -19,7 +19,7 @@ class ResultListView(generic.ListView):
         user = self.request.user
         object_list = self.model.objects.all()
         if user:
-            object_list = object_list.filter(user=user)
+            object_list = object_list.filter(user=user).order_by('-date')
         return object_list
 
 @login_required
@@ -44,6 +44,7 @@ def result(request, pk):
         form = ResultForm(instance = res)
 
         context = {
+            'title': 'Результат',
             'tests': Tests.objects.all(),
             'pk' : pk,
             'form': form,
@@ -100,7 +101,7 @@ def tester(request, id = -1, id_task = -1, pk = -1):
     answers = Answers.objects.filter(task=task.id)
 
     context = {
-        'title': 'Тесты',
+        'title': 'Тестирование',
         'test': test,
         'tests': tests,
         'task': task,
@@ -118,24 +119,16 @@ def tester(request, id = -1, id_task = -1, pk = -1):
 @login_required
 def home(request):
 
-
-    if request.method == 'POST':
-        tests = Tests.objects.all()
-        context = {
-            'title': 'Тесты',
-            'tests': tests,
-        }
-    else:
-        context = {
-            'title': 'Тесты',
-            'tests': Tests.objects.all(),
-        }
+    context = {
+        'title': 'Основная',
+        'tests': Tests.objects.all(),
+    }
     return render(request, 'main/home.html', context)
 
 
 def about(request):
 
     context = {
-        'title': 'обо мне!'
+        'title': 'об проекте'
     }
     return render(request, 'main/about.html', context)

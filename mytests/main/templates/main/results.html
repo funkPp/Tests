@@ -1,18 +1,25 @@
 {% extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-
-    <tbody>
+    <h4>Результаты тестирований:</h4>
+    <table BORDER>
+        <tr>
+            <th>Пройденный тест</th>
+            <th>Дата тестирования</th>
+            <th>Кол-во правильных ответов</th>
+            <th>Кол-во неправильных ответов</th>
+            <th>Ваш комментарий</th>
+        </tr>
         {% for o in object_list %}
-            <tr>
-                <td>{{ o.test }}</td>
-                <td>{{ o.date }}</td>
-                <td>{{ o.tr }}</td>
-                <td>{{ o.fs }}</td>
-                <td>{{ o.comment }}</td>
-            </tr><br>
+        <tr>
+            <td>{{ o.test }}</td>
+            <td>{{ o.date }}</td>
+            <td>{{ o.tr }}</td>
+            <td>{{ o.fs }}</td>
+            <td>{{ o.comment }}</td>
+        </tr>
         {% endfor %}
-    </tbody>
+    </table>
 <nav class="list-pages">
     <ul>
         {% if page_obj.has_previous %}
