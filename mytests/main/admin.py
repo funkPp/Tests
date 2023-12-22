@@ -5,3 +5,7 @@ admin.site.register(Tests)
 admin.site.register(Tasks)
 admin.site.register(Answers)
 admin.site.register(Result)
+
+class AnswersAdmin(admin.ModelAdmin):
+    list_display = ('desc', 'true')
+    ordering = ['task', 'id']
