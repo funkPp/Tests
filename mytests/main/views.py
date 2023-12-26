@@ -68,7 +68,7 @@ def tester(request, id = -1, id_task = -1, pk = -1):
         res.date = datetime.datetime.now()
         res.tr = 0
         res.fs = 0
-        res.id_tasks = ''.join(map(str,id_tasks))
+        res.id_tasks = ','.join(map(str,id_tasks))
         res.save()
 
     if request.method == 'POST':
@@ -85,14 +85,15 @@ def tester(request, id = -1, id_task = -1, pk = -1):
             res.fs +=1
             res.save()
 
-    if id_task == 0 : return  redirect('/result/'+str(pk))
+    if id_task == 0 :
+        return  redirect('/result/'+str(pk))
     tests = Tests.objects.all()
     task = Tasks.objects.get(id=id_task)
 
     try:
-        id_tasks = list(map(int,list(res.id_tasks)))
+        id_tasks = list(map(int,res.id_tasks.split(',')))
         task_next = id_tasks.pop()
-        res.id_tasks = ''.join(map(str,list(id_tasks)))
+        res.id_tasks = ','.join(map(str,list(id_tasks)))
         res.save()
     except:
         task_next = 0
